@@ -1,10 +1,45 @@
-<h1><%= @pokemon.name %></h1>
-<p>Type: <strong><%= @pokemon.element_type.capitalize %></strong></p>
+<%= link_to "← Back to Pokedex", root_path %>
 
-<% if @pokemon.photo.attached? %>
-  <%= image_tag url_for(@pokemon.photo), alt: @pokemon.name, width: 250, height: 250 %>
+<div class="profile">
+  <% if @pokemon.photo.attached? %>
+    <%= cl_image_tag @pokemon.photo.key, alt: @pokemon.name, width: 260, height: 260, crop: :fill %>
+  <% end %>
+  <div>
+    <h1><%= @pokemon.name %></h1>
+    <p>Type: <%= @pokemon.element_type.capitalize %></p>
+  </div>
+</div>
+
+<hr>
+
+<h2>Catch this Pokémon</h2>
+
+<%= form_with model: [@pokemon, @pokeball], local: true do |f| %>
+  <div class="field">
+    <%= f.label :trainer_id, "Trainer" %><br>
+    <%= f.collection_select :trainer_id, @trainers, :id, :name, prompt: "Select a trainer" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :location %><br>
+    <%= f.text_field :location, placeholder: "Where did you catch it?" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :caught_on %><br>
+    <%= f.date_field :caught_on, value: Date.today %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Throw Pokéball!" %>
+  </div>
 <% end %>
 
-<p style="margin-top: 12px;">
-  <%= link_to "← Back to Pokedex", root_path %>
-</p>
+<% if @pokeball.errors.any? %>
+  <div class="errors">
+    <p><strong>Could not catch:</strong></p>
+    <ul>
+      <% @pokeball.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
+    </ul>
+  </div>
+<% end %>

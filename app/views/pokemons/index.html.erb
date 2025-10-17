@@ -1,13 +1,28 @@
 <h1>Pokedex</h1>
 
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;">
+<!-- Optional 2: search bar -->
+<%= form_with url: pokemons_path, method: :get, local: true do |f| %>
+  <div class="field">
+    <%= f.label :q, "Search Pokémon" %>
+    <%= f.text_field :q, value: @query, placeholder: "e.g. Pikachu" %>
+    <%= f.submit "Search" %>
+    <% if @query.present? %>
+      <%= link_to "Clear", pokemons_path %>
+    <% end %>
+  </div>
+<% end %>
+
+<!-- Optional 4: random pokemon -->
+<p><%= link_to "🎲 Random Pokémon", random_pokemons_path, class: "button" %></p>
+
+<div class="grid">
   <% @pokemons.each do |pokemon| %>
-    <div style="padding:12px;border:1px solid #ddd;border-radius:8px;text-align:center;">
+    <div class="card">
       <% if pokemon.photo.attached? %>
-         <%= image_tag url_for(pokemon.photo), alt: pokemon.name, width: 150, height: 150 %>
+        <%= cl_image_tag pokemon.photo.key, alt: pokemon.name, width: 200, height: 200, crop: :fill %>
       <% end %>
-      <h3><%= link_to pokemon.name, pokemon_path(pokemon) %></h3>
-      <p><em><%= pokemon.element_type.capitalize %></em></p>
+      <h2><%= link_to pokemon.name, pokemon_path(pokemon) %></h2>
+      <p>Type: <%= pokemon.element_type.capitalize %></p>
     </div>
   <% end %>
 </div>
