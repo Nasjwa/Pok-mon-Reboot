@@ -2,7 +2,7 @@
 <p>Type: <strong><%= @pokemon.element_type.capitalize %></strong></p>
 
 <% if @pokemon.photo.attached? %>
-  <%= cl_image_tag @pokemon.photo.key, width: 250, height: 250, crop: :fill, alt: @pokemon.name %>
+  <%= image_tag url_for(@pokemon.photo), alt: @pokemon.name, width: 250, height: 250 %>
 <% end %>
 
 <p style="margin-top: 12px;">
