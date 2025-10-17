@@ -1,0 +1,13 @@
+<h1>Pokedex</h1>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;">
+  <% @pokemons.each do |pokemon| %>
+    <div style="padding:12px;border:1px solid #ddd;border-radius:8px;text-align:center;">
+      <% if pokemon.photo.attached? %>
+        <%= cl_image_tag pokemon.photo.key, width: 150, height: 150, crop: :fill, alt: pokemon.name %>
+      <% end %>
+      <h3><%= link_to pokemon.name, pokemon_path(pokemon) %></h3>
+      <p><em><%= pokemon.element_type.capitalize %></em></p>
+    </div>
+  <% end %>
+</div>
