@@ -1,0 +1,24 @@
+<!-- app/views/trainers/new.html.erb -->
+<%= link_to "← Back to Trainers", trainers_path %>
+<h1>New Trainer</h1>
+
+<%= form_with model: @trainer, local: true do |f| %>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :age %><br>
+    <%= f.number_field :age, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :photo %><br>
+    <%= f.file_field :photo, accept: "image/*" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Create Trainer" %>
+  </div>
+<% end %>

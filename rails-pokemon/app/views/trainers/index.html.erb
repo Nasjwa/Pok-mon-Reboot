@@ -1,0 +1,18 @@
+<!-- app/views/trainers/index.html.erb -->
+<h1>All Trainers</h1>
+
+<div class="tools" style="margin-bottom:12px;">
+  <%= link_to "➕ New Trainer", new_trainer_path, class: "button" %>
+</div>
+
+<div class="grid">
+  <% @trainers.each do |trainer| %>
+    <div class="card">
+      <% if trainer.photo.attached? %>
+        <%= cl_image_tag trainer.photo.key, alt: trainer.name, width: 200, height: 200, crop: :fill %>
+      <% end %>
+      <h2><%= link_to trainer.name, trainer_path(trainer) %></h2>
+      <p>Age: <%= trainer.age %></p>
+    </div>
+  <% end %>
+</div>
